@@ -14,4 +14,5 @@
   >>–js js文件  
   >>–index.html 静态文件
 
+>–.jshintrc jshint配置文件
 >–gulpfile.js gulp任务文件 

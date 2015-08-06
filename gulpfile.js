@@ -1,6 +1,6 @@
 /**
  * 组件安装
- * npm install gulp-util gulp-imagemin gulp-ruby-sass gulp-minify-css gulp-jshint gulp-uglify gulp-rename gulp-concat gulp-clean gulp-livereload tiny-lr --save-dev
+ * npm install gulp-util gulp-imagemin gulp-ruby-sass gulp-minify-css gulp-jshint gulp-uglify gulp-rename gulp-concat del gulp-livereload tiny-lr --save-dev
  */
 
 // 引入 gulp及组件
@@ -12,7 +12,7 @@ var gulp    = require('gulp'),                 //基础库
     uglify  = require('gulp-uglify'),          //js压缩
     rename = require('gulp-rename'),           //重命名
     concat  = require('gulp-concat'),          //合并文件
-    clean = require('gulp-clean'),             //清空文件夹
+    del = require('del'),                      //清空文件夹 gulp-clean和gulp-rimraf使用del代替 2015.8.6
     tinylr = require('tiny-lr'),               //livereload
     server = tinylr(),
     port = 35729,
@@ -34,7 +34,7 @@ gulp.task('css', function () {
         cssDst = './dist/css';
 
     gulp.src(cssSrc)
-        .pipe(sass({ style: 'expanded'}))
+        .pipe(sass({style: 'expanded'}))
         .pipe(gulp.dest(cssDst))
         .pipe(rename({ suffix: '.min' }))
         .pipe(minifycss())
@@ -59,7 +59,7 @@ gulp.task('js', function () {
 
     gulp.src(jsSrc)
         .pipe(jshint('.jshintrc'))
-        .pipe(jshint.reporter('default'))
+        .pipe(jshint.reporter('default')) //jshint检查脚本
         .pipe(concat('main.js'))
         .pipe(gulp.dest(jsDst))
         .pipe(rename({ suffix: '.min' }))
@@ -70,8 +70,7 @@ gulp.task('js', function () {
 
 // 清空图片、样式、js
 gulp.task('clean', function() {
-    gulp.src(['./dist/css', './dist/js', './dist/images'], {read: false})
-        .pipe(clean());
+    del(['./dist/css', './dist/js', './dist/images'], {read: false});
 });
 
 // 默认任务 清空图片、样式、js并重建 运行语句 gulp
