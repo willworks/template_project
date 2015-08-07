@@ -1,0 +1,27 @@
+{
+  "name": "template_project",
+  "version": "1.0.0",
+  "description": "基于gulp和npm和scss前端自动构建解决方案",
+  "main": "./dist/index.html",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/willworks/template_project.git"
+  },
+  "keywords": [
+    "gulp",
+    "npm",
+    "scss",
+    "auto-compile"
+  ],
+  "author": "kevin.zhong",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/willworks/template_project/issues"
+  },
+  "homepage": "https://github.com/willworks/template_project#readme"
+}
