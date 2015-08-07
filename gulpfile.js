@@ -1,6 +1,27 @@
 /**
+ * Document   : gulpfile.js
+ * Created on : 2015 8
+ * Author     : Kevin Zhong
+ * License    : MIT
+ * github     : https://github.com/willworks 
+ * Description: 基于gulp和npm和scss前端自动构建解决方案
+ * Copyright (c) 2015 Kevin Zhong
+
+ * 解决问题
+ * 1. 用scss和原生js编写代码
+ * 2. gulp自动构建，压缩scss,图片和检查压缩js，编译出目标文件
+
+ * 切换淘宝镜像加速
+ * npm http://npm.taobao.org/
+ * npm install -g nrm
+ * nrm use taobao
+
  * 组件安装
  * npm install gulp-util gulp-imagemin gulp-ruby-sass gulp-minify-css gulp-jshint gulp-uglify gulp-rename gulp-concat del gulp-livereload tiny-lr --save-dev
+
+ * 使用问题
+ * 1.gulp-clean和gulp-rimraf使用del代替，注意npm https://www.npmjs.com 上包的更新
+ * 2.注意接口更新，详细参照https://github.com/sindresorhus/gulp-ruby-sass
  */
 
 // 引入 gulp及组件
@@ -18,6 +39,7 @@ var gulp    = require('gulp'),                 //基础库
     port = 35729,
     livereload = require('gulp-livereload');   //livereload
 
+
 // HTML处理
 gulp.task('html', function() {
     var htmlSrc = './src/*.html',
@@ -27,6 +49,7 @@ gulp.task('html', function() {
         .pipe(livereload(server))
         .pipe(gulp.dest(htmlDst))
 });
+
 
 // 样式处理
 gulp.task('css', function () {
@@ -42,6 +65,32 @@ gulp.task('css', function () {
         .pipe(gulp.dest(cssDst));
 });
 
+===========================================================================
+gulp.task('sass', function () {
+    return sass('source', {sourcemap: true})
+        .on('error', function (err) {
+            console.error('Error!', err.message);
+        })
+        .pipe(sourcemaps.write())
+        .pipe(gulp.dest('result'));
+});
+
+
+gulp.task('sass', function() {
+    return sass('source', { sourcemap: true })
+    .on('error', function (err) {
+      console.error('Error', err.message);
+   })
+
+    .pipe(sourcemaps.write('maps', {
+        includeContent: false,
+        sourceRoot: '/source'
+    }))
+
+    .pipe(gulp.dest('result'));
+});
+===========================================================================
+
 // 图片处理
 gulp.task('images', function(){
     var imgSrc = './src/images/**/*',
@@ -51,6 +100,7 @@ gulp.task('images', function(){
         .pipe(livereload(server))
         .pipe(gulp.dest(imgDst));
 })
+
 
 // js处理
 gulp.task('js', function () {
@@ -68,15 +118,18 @@ gulp.task('js', function () {
         .pipe(gulp.dest(jsDst));
 });
 
+
 // 清空图片、样式、js
 gulp.task('clean', function() {
     del(['./dist/css', './dist/js', './dist/images'], {read: false});
 });
 
+
 // 默认任务 清空图片、样式、js并重建 运行语句 gulp
 gulp.task('default', ['clean'], function(){
     gulp.start('html','css','images','js');
 });
+
 
 // 监听任务 运行语句 gulp watch
 gulp.task('watch',function(){
