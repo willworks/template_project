@@ -11,10 +11,15 @@
  * 1. 用scss和原生js编写代码
  * 2. gulp自动构建，压缩scss,图片和检查压缩js，编译出目标文件
 
- * 切换淘宝镜像加速
+ * 切换淘宝镜像加速 [node version manager]
  * npm http://npm.taobao.org/
  * npm install -g nrm
  * nrm use taobao
+
+ * 切换node版本nrm [npm registry manager]
+ * npm install -g nrm
+ * nrm ls //查看node所有版本
+ * nrm usr {verision}
 
  * 组件安装
  * npm install gulp-util gulp-imagemin gulp-ruby-sass gulp-minify-css gulp-jshint gulp-uglify gulp-rename gulp-concat del gulp-livereload tiny-lr --save-dev
