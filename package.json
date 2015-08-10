@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "基于gulp和npm和scss前端自动构建解决方案",
   "main": "./dist/index.html",
-  "dependencies": {},
+  "dependencies": {
+    "del": "^1.2.0",
+    "jshint": "^2.8.0"
+  },
   "devDependencies": {
     "del": "^1.2.0",
     "gulp-concat": "^2.6.0",

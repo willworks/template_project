@@ -25,6 +25,7 @@
  - npm install gulp-util gulp-imagemin gulp-ruby-sass gulp-minify-css gulp-jshint gulp-uglify gulp-rename gulp-concat del gulp-livereload tiny-lr --save-dev  
 
 ## 使用问题  
+ - 在项目根目录新建一个文件：.jshintrc（windows用户应该在文件管理器里面创建.jshintrc.文件，然后它会自动改名为.jshintrc），在此文件里填写你的检查规则
  - gulp-clean和gulp-rimraf使用del代替，注意npm https://www.npmjs.com 上包的更新  
  - 注意接口更新，详细参照https://github.com/sindresorhus/gulp-ruby-sass  
 
@@ -55,8 +56,8 @@
  - For example, the original syntax in 0.7.x and earlier using gulp.src(), now deprecated:  
 
  - // gulp-ruby-sass: 0.7.1  	
- - ![image](https://github.com/willworks/template_project/raw/master/README/old.png);   `
+ - ![image](https://github.com/willworks/template_project/raw/master/README/old.png)  
  - The new syntax introduced in 1.x using gulp-ruby-sass() as a gulp source adapter:  
 
  - // gulp-ruby-sass: 1.x  
- - ![image](https://github.com/willworks/template_project/raw/master/README/new.png);`
+ - ![image](https://github.com/willworks/template_project/raw/master/README/new.png)  
