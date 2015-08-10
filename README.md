@@ -46,3 +46,27 @@
 
 >>–.jshintrc jshint配置文件  
 >>–gulpfile.js gulp任务文件  
+
+### 插件语法更新  
+ - With the syntax changes in gulp-ruby-sass starting from 1.0.0-alpha, you'll need to use gulp-ruby-sass() instead of gulp.src() to compile your Sass from a file or directory.  
+ - If you try to use the original syntax with newer or latest versions, you may encounter the following error:  
+ - TypeError: Arguments to path.join must be strings  
+ - For example, the original syntax in 0.7.x and earlier using gulp.src(), now deprecated:  
+
+ - // gulp-ruby-sass: 0.7.1  	
+    `var gulp = require('gulp');   `
+    `var sass = require('gulp-ruby-sass');    `
+    `gulp.task('sass', function() {    `
+    `   return gulp.src('path/to/scss')    `
+    `       .pipe(sass({ style: 'expanded' }))    `
+    `       .pipe(gulp.dest('path/to/css'));    `
+    `});    `
+ - The new syntax introduced in 1.x using gulp-ruby-sass() as a gulp source adapter:  
+
+ - // gulp-ruby-sass: 1.x  
+   `var gulp = require('gulp');  `
+   `var sass = require('gulp-ruby-sass');  `
+   `gulp.task('sass', function() {  `
+   `    return sass('path/to/scss', { style: 'expanded' })//this is another difference  `
+   `        .pipe(gulp.dest('path/to/css'));  `
+   `});  `

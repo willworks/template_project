@@ -36,7 +36,7 @@
  */
 
 // 引入 gulp及组件
-var gulp    = require('gulp'),                 //基础库
+var gulp = require('gulp'),                 //基础库
     imagemin = require('gulp-imagemin'),       //图片压缩
     sass = require('gulp-ruby-sass'),          //sass
     minifycss = require('gulp-minify-css'),    //css压缩
@@ -63,44 +63,44 @@ gulp.task('html', function() {
 
 
 // 样式处理
+/*
+    With the syntax changes in gulp-ruby-sass starting from 1.0.0-alpha, you'll need to use gulp-ruby-sass() instead of gulp.src() to compile your Sass from a file or directory.
+    If you try to use the original syntax with newer or latest versions, you may encounter the following error:
+    TypeError: Arguments to path.join must be strings
+    For example, the original syntax in 0.7.x and earlier using gulp.src(), now deprecated:
+
+    var gulp = require('gulp');
+    var sass = require('gulp-ruby-sass');
+
+    // gulp-ruby-sass: 0.7.1
+    gulp.task('sass', function() {
+        return gulp.src('path/to/scss')
+            .pipe(sass({ style: 'expanded' }))
+            .pipe(gulp.dest('path/to/css'));
+    });
+    The new syntax introduced in 1.x using gulp-ruby-sass() as a gulp source adapter:
+
+    // gulp-ruby-sass: 1.x
+    gulp.task('sass', function() {
+        return sass('path/to/scss', { style: 'expanded' })//this is another difference
+            .pipe(gulp.dest('path/to/css'));
+    });
+    Notice the difference in the first line of the return statement.
+*/
 gulp.task('css', function () {
     var cssSrc = './src/scss/*.scss',
         cssDst = './dist/css';
-
-    gulp.src(cssSrc)
-        .pipe(sass({style: 'expanded'}))
+        return sass(cssSrc,{style: 'expanded'})
+        .on('error', function (err) {
+            console.error('Error!', err.message);
+        })
         .pipe(gulp.dest(cssDst))
-        .pipe(rename({ suffix: '.min' }))
+        .pipe(rename({suffix: '.min'}))
         .pipe(minifycss())
         .pipe(livereload(server))
         .pipe(gulp.dest(cssDst));
 });
 
-===========================================================================
-gulp.task('sass', function () {
-    return sass('source', {sourcemap: true})
-        .on('error', function (err) {
-            console.error('Error!', err.message);
-        })
-        .pipe(sourcemaps.write())
-        .pipe(gulp.dest('result'));
-});
-
-
-gulp.task('sass', function() {
-    return sass('source', { sourcemap: true })
-    .on('error', function (err) {
-      console.error('Error', err.message);
-   })
-
-    .pipe(sourcemaps.write('maps', {
-        includeContent: false,
-        sourceRoot: '/source'
-    }))
-
-    .pipe(gulp.dest('result'));
-});
-===========================================================================
 
 // 图片处理
 gulp.task('images', function(){
