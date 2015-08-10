@@ -30,6 +30,7 @@
 
 ## 目录说明  
 >-template_project  
+>>-README 存放说明文件附加图片  
 >>–.git 通过git管理项目会生成这个文件夹  
 >>–node_modules 组件目录  
 >>–dist 发布环境  
