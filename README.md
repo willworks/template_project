@@ -15,6 +15,12 @@
  - nrm ls //查看node所有版本  
  - nrm usr {verision}  
 
+## 使用淘宝RubyGems镜像安装sass  
+ - 安装ruby，会自动安装gem
+ - gem sources --remove https://rubygems.org/  
+ - gem sources -a https://ruby.taobao.org/  
+ - gem install sass  
+
 ## 组件安装  
  - npm install gulp-util gulp-imagemin gulp-ruby-sass gulp-minify-css gulp-jshint gulp-uglify gulp-rename gulp-concat del gulp-livereload tiny-lr --save-dev  
 
