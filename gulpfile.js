@@ -8,8 +8,8 @@
  * Copyright (c) 2015 Kevin Zhong
 
  * 解决问题
- * 1. 用scss和原生js编写代码
- * 2. gulp自动构建，压缩scss,图片和检查压缩js，编译出目标文件
+ * 用scss和原生js编写代码
+ * gulp自动构建，压缩scss,图片和检查压缩js，编译出目标文件
 
  * 切换淘宝镜像加速 [node version manager]
  * npm http://npm.taobao.org/
@@ -31,8 +31,8 @@
  * npm install gulp-util gulp-imagemin gulp-ruby-sass gulp-minify-css gulp-jshint gulp-uglify gulp-rename gulp-concat del gulp-livereload tiny-lr --save-dev
 
  * 使用问题
- * 1.gulp-clean和gulp-rimraf使用del代替，注意npm https://www.npmjs.com 上包的更新
- * 2.注意接口更新，详细参照https://github.com/sindresorhus/gulp-ruby-sass
+ * gulp-clean和gulp-rimraf使用del代替，注意npm https://www.npmjs.com 上包的更新
+ * 注意接口更新，详细参照https://github.com/sindresorhus/gulp-ruby-sass
  */
 
 // 引入 gulp及组件
