@@ -54,19 +54,8 @@
  - For example, the original syntax in 0.7.x and earlier using gulp.src(), now deprecated:  
 
  - // gulp-ruby-sass: 0.7.1  	
-    `var gulp = require('gulp');   `
-    `var sass = require('gulp-ruby-sass');    `
-    `gulp.task('sass', function() {    `
-    `   return gulp.src('path/to/scss')    `
-    `       .pipe(sass({ style: 'expanded' }))    `
-    `       .pipe(gulp.dest('path/to/css'));    `
-    `});    `
+ - ![image](https://github.com/willworks/template_project/raw/master/README/old.png);   `
  - The new syntax introduced in 1.x using gulp-ruby-sass() as a gulp source adapter:  
 
  - // gulp-ruby-sass: 1.x  
-   `var gulp = require('gulp');  `
-   `var sass = require('gulp-ruby-sass');  `
-   `gulp.task('sass', function() {  `
-   `    return sass('path/to/scss', { style: 'expanded' })//this is another difference  `
-   `        .pipe(gulp.dest('path/to/css'));  `
-   `});  `
+ - ![image](https://github.com/willworks/template_project/raw/master/README/new.png);`
