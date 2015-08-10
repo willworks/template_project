@@ -89,6 +89,8 @@ gulp.task('html', function() {
     Notice the difference in the first line of the return statement.
 */
 gulp.task('css', function () {
+    //gulp-ruby-sass新的语法能识别路径下的所有文件，不用指定后缀名
+    //旧版 var cssSrc = './src/scss/*.scss'
     var cssSrc = './src/scss/',
         cssDst = './dist/css';
         return sass(cssSrc,{style: 'expanded'})
@@ -118,7 +120,6 @@ gulp.task('images', function(){
 gulp.task('js', function () {
     var jsSrc = './src/js/*.js',
         jsDst ='./dist/js';
-
     gulp.src(jsSrc)
         .pipe(jshint('.jshintrc'))
         .pipe(jshint.reporter('default')) //jshint检查脚本
@@ -145,31 +146,25 @@ gulp.task('default', ['clean'], function(){
 
 // 监听任务 运行语句 gulp watch
 gulp.task('watch',function(){
-
     server.listen(port, function(err){
         if (err) {
             return console.log(err);
         }
-
         // 监听html
         gulp.watch('./src/*.html', function(event){
             gulp.run('html');
         })
-
         // 监听css
         gulp.watch('./src/scss/*.scss', function(){
             gulp.run('css');
         });
-
         // 监听images
         gulp.watch('./src/images/**/*', function(){
             gulp.run('images');
         });
-
         // 监听js
         gulp.watch('./src/js/*.js', function(){
             gulp.run('js');
         });
-
     });
 });

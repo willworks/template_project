@@ -16,7 +16,7 @@
  - nrm usr {verision}  
 
 ## 使用淘宝RubyGems镜像安装sass  
- - 安装ruby，会自动安装gem
+ - 安装ruby，会自动安装gem  
  - gem sources --remove https://rubygems.org/  
  - gem sources -a https://ruby.taobao.org/  
  - gem install sass  
@@ -25,7 +25,8 @@
  - npm install gulp-util gulp-imagemin gulp-ruby-sass gulp-minify-css gulp-jshint gulp-uglify gulp-rename gulp-concat del gulp-livereload tiny-lr --save-dev  
 
 ## 使用问题  
- - 在项目根目录新建一个文件：.jshintrc（windows用户应该在文件管理器里面创建.jshintrc.文件，然后它会自动改名为.jshintrc），在此文件里填写你的检查规则
+ - 在项目根目录新建一个文件：.jshintrc（windows用户应该在文件管理器里面创建.jshintrc.文件，然后它会自动改名为.jshintrc），在此文件里填写你的检查规则  
+ - gulp-ruby-sass新的语法能识别路径下的所有文件，不用指定后缀名 [旧版 var cssSrc = './src/scss/*.scss' 新版 var cssSrc = './src/scss/']  
  - gulp-clean和gulp-rimraf使用del代替，注意npm https://www.npmjs.com 上包的更新  
  - 注意接口更新，详细参照https://github.com/sindresorhus/gulp-ruby-sass  
 
