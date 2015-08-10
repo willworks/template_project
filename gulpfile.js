@@ -89,7 +89,7 @@ gulp.task('html', function() {
     Notice the difference in the first line of the return statement.
 */
 gulp.task('css', function () {
-    var cssSrc = './src/scss/*.scss',
+    var cssSrc = './src/scss/',
         cssDst = './dist/css';
         return sass(cssSrc,{style: 'expanded'})
         .on('error', function (err) {
