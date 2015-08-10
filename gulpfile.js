@@ -28,7 +28,7 @@
  * gem install sass 
  
  * 组件安装
- * npm install gulp-util gulp-imagemin gulp-ruby-sass gulp-minify-css gulp-jshint gulp-uglify gulp-rename gulp-concat del gulp-livereload tiny-lr --save-dev
+ * npm install gulp-util gulp-imagemin gulp-ruby-sass gulp-minify-css gulp-jshint gulp-uglify gulp-rename gulp-concat del gulp-livereload tiny-lr gulp-webserver --save-dev
 
  * 使用问题
  * 在项目根目录新建一个文件：.jshintrc（windows用户应该在文件管理器里面创建.jshintrc.文件，然后它会自动改名为.jshintrc），在此文件里填写你的检查规则
@@ -39,7 +39,7 @@
 // 引入 gulp及组件
 var gulp = require('gulp'),                 //基础库
     imagemin = require('gulp-imagemin'),       //图片压缩
-    sass = require('gulp-ruby-sass'),          //sass
+    sass = require('gulp-ruby-sass'),          //sass编译
     minifycss = require('gulp-minify-css'),    //css压缩
     jshint = require('gulp-jshint'),           //js检查
     uglify  = require('gulp-uglify'),          //js压缩
@@ -49,7 +49,8 @@ var gulp = require('gulp'),                 //基础库
     tinylr = require('tiny-lr'),               //livereload
     server = tinylr(),
     port = 35729,
-    livereload = require('gulp-livereload');   //livereload
+    livereload = require('gulp-livereload'),   //livereload用于浏览器自动刷新
+    webserver = require('gulp-webserver');     //用于在本地启动Http服务
 
 
 // HTML处理
@@ -138,8 +139,8 @@ gulp.task('clean', function() {
 });
 
 
-// 默认任务 清空图片、样式、js并重建 运行语句 gulp
-gulp.task('default', ['clean'], function(){
+// 编译工程：清空图片、样式、js并重建 运行语句 gulp build
+gulp.task('build', ['clean'], function(){
     gulp.start('html','css','images','js');
 });
 
@@ -168,3 +169,19 @@ gulp.task('watch',function(){
         });
     });
 });
+
+
+// 服务器 开启时候默认监控文件更改并且自动编译 gulp server
+gulp.task('server', function() {
+  gulp.src('./src/')
+    .pipe(webserver({
+      livereload: true,
+      port: 8080, //端口号
+      open: true  //自动打开浏览器
+    }));
+  gulp.start('watch');
+});
+
+
+// 默认任务(编译工程)
+gulp.task('default', ['build']);

@@ -24,7 +24,12 @@
 ## 组件安装  
  - npm install gulp-util gulp-imagemin gulp-ruby-sass gulp-minify-css gulp-jshint gulp-uglify gulp-rename gulp-concat del gulp-livereload tiny-lr --save-dev  
 
-## 使用问题  
+## 使用方法  
+ - 进入根目录，npm install,安装文件依赖  
+ - gulp 默认任务编译工程  
+ - gulp server 开启服务器，默认打开入口网页，并且自动监控代码修改并且编译  
+
+## 常见问题  
  - 在项目根目录新建一个文件：.jshintrc(windows用户创建.jshintrc.文件，系统会自动改名.jshintrc)，在此文件里填写你的检查规则  
  - gulp-ruby-sass新的语法能识别路径下的所有文件，不用指定后缀名  
  - 旧版 var cssSrc = './src/scss/*.scss' 新版 var cssSrc = './src/scss/' 
