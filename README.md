@@ -27,7 +27,9 @@
 ## 使用方法  
  - 进入根目录，npm install,安装文件依赖  
  - gulp 默认任务编译工程  
+ - ![image](https://github.com/willworks/template_project/raw/master/README/build.png)  
  - gulp server 开启服务器，默认打开入口网页，并且自动监控代码修改并且编译  
+ - ![image](https://github.com/willworks/template_project/raw/master/README/liveReload.png)    
 
 ## 常见问题  
  - 在项目根目录新建一个文件：.jshintrc(windows用户创建.jshintrc.文件，系统会自动改名.jshintrc)，在此文件里填写你的检查规则  
