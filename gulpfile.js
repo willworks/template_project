@@ -37,20 +37,21 @@
  */
 
 // 引入 gulp及组件
-var gulp = require('gulp'),                 //基础库
-    imagemin = require('gulp-imagemin'),       //图片压缩
-    sass = require('gulp-ruby-sass'),          //sass编译
-    minifycss = require('gulp-minify-css'),    //css压缩
-    jshint = require('gulp-jshint'),           //js检查
-    uglify  = require('gulp-uglify'),          //js压缩
-    rename = require('gulp-rename'),           //重命名
-    concat  = require('gulp-concat'),          //合并文件
-    del = require('del'),                      //清空文件夹 gulp-clean和gulp-rimraf使用del代替 2015.8.6
-    tinylr = require('tiny-lr'),               //livereload
+var gulp = require('gulp'),                       //基础库
+    imagemin = require('gulp-imagemin'),          //图片压缩
+    sass = require('gulp-ruby-sass'),             //sass编译
+    minifycss = require('gulp-minify-css'),       //css压缩
+    jshint = require('gulp-jshint'),              //js检查
+    uglify  = require('gulp-uglify'),             //js压缩
+    rename = require('gulp-rename'),              //重命名
+    concat  = require('gulp-concat'),             //合并文件
+    del = require('del'),                         //清空文件夹 gulp-clean和gulp-rimraf使用del代替 2015.8.6
+    tinylr = require('tiny-lr'),                  //livereload
     server = tinylr(),
     port = 35729,
-    livereload = require('gulp-livereload'),   //livereload用于浏览器自动刷新
-    webserver = require('gulp-webserver');     //用于在本地启动Http服务
+    livereload = require('gulp-livereload'),      //livereload用于浏览器自动刷新
+    webserver = require('gulp-webserver'),        //用于在本地启动Http服务
+    autoprefixer = require('gulp-autoprefixer');  //引入autoprefixer插件
 
 
 // HTML处理
@@ -60,7 +61,7 @@ gulp.task('html', function() {
 
     gulp.src(htmlSrc)
         .pipe(livereload(server))
-        .pipe(gulp.dest(htmlDst))
+        .pipe(gulp.dest(htmlDst));
 });
 
 
@@ -98,6 +99,8 @@ gulp.task('css', function () {
         .on('error', function (err) {
             console.error('Error!', err.message);
         })
+        //添加autoprefixer参数，基于在线统计自动匹配，详细参考 http://caniuse.com/
+        .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'))
         .pipe(gulp.dest(cssDst))
         .pipe(rename({suffix: '.min'}))
         .pipe(minifycss())
@@ -114,7 +117,7 @@ gulp.task('images', function(){
         .pipe(imagemin())
         .pipe(livereload(server))
         .pipe(gulp.dest(imgDst));
-})
+});
 
 
 // js处理
@@ -154,7 +157,7 @@ gulp.task('watch',function(){
         // 监听html
         gulp.watch('./src/*.html', function(event){
             gulp.run('html');
-        })
+        });
         // 监听css
         gulp.watch('./src/scss/*.scss', function(){
             gulp.run('css');
