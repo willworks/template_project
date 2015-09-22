@@ -111,7 +111,7 @@ gulp.task('css', function () {
 
 // 图片处理
 gulp.task('images', function(){
-    var imgSrc = './src/images/**/*',
+    var imgSrc = './src/images/*.+(jpeg|jpg|png)',// 防止windows下gulp无法打开缩略图缓存Thunbs.db而报错
         imgDst = './dist/images';
     gulp.src(imgSrc)
         .pipe(imagemin({
