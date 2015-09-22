@@ -39,6 +39,8 @@
 // 引入 gulp及组件
 var gulp = require('gulp'),                       //基础库
     imagemin = require('gulp-imagemin'),          //图片压缩
+    jpegtran = require('imagemin-jpegtran'),      //压缩jpg
+    pngquant = require('imagemin-pngquant'),      //压缩jpg
     sass = require('gulp-ruby-sass'),             //sass编译
     minifycss = require('gulp-minify-css'),       //css压缩
     jshint = require('gulp-jshint'),              //js检查
@@ -111,15 +113,19 @@ gulp.task('css', function () {
 
 // 图片处理
 gulp.task('images', function(){
-    var imgSrc = './src/images/*.+(jpeg|jpg|png)',// 防止windows下gulp无法打开缩略图缓存Thunbs.db而报错
+    var jpgSrc = './src/images/*.+(jpeg|jpg)',// 防止windows下gulp无法打开缩略图缓存Thunbs.db而报错
+        pngSrc = './src/images/*.png',// 防止windows下gulp无法打开缩略图缓存Thunbs.db而报错
         imgDst = './dist/images';
-    gulp.src(imgSrc)
+    
+    gulp.src(jpgSrc)
+        .pipe(jpegtran({progressive: true})())
+        .pipe(livereload(server))
+        .pipe(gulp.dest(imgDst));
+    gulp.src(pngSrc)
         .pipe(imagemin({
-                    optimizationLevel: 5, //类型：Number  默认：3  取值范围：0-7（优化等级）
-                    progressive: true, //类型：Boolean 默认：false 无损压缩jpg图片
-                    interlaced: true, //类型：Boolean 默认：false 隔行扫描gif进行渲染
-                    multipass: true //类型：Boolean 默认：false 多次优化svg直到完全优化
-         }))
+            progressive: true,
+            use: [pngquant({quality: '65-80'})]
+        }))
         .pipe(livereload(server))
         .pipe(gulp.dest(imgDst));
 });
