@@ -6,55 +6,27 @@
  * github     : https://github.com/willworks 
  * Description: 基于gulp和npm和scss前端自动构建解决方案
  * Copyright (c) 2015 Kevin Zhong
-
- * 解决问题
- * 用scss和原生js编写代码
- * gulp自动构建，压缩scss,图片和检查压缩js，编译出目标文件
-
- * 切换淘宝镜像加速 [node version manager]
- * npm http://npm.taobao.org/
- * npm install -g nrm
- * nrm use taobao
-
- * 切换node版本nrm [npm registry manager]
- * npm install -g nrm
- * nrm ls //查看node所有版本
- * nrm usr {verision}
-
- * 使用淘宝RubyGems镜像安装sass  
- * 安装ruby，会自动安装gem
- * gem sources --remove https://rubygems.org/  
- * gem sources -a https://ruby.taobao.org/  
- * gem install sass 
- 
- * 组件安装
- * npm install gulp-util gulp-imagemin gulp-ruby-sass gulp-minify-css gulp-jshint gulp-uglify gulp-rename gulp-concat del gulp-livereload tiny-lr gulp-webserver --save-dev
-
- * 使用问题
- * 在项目根目录新建一个文件：.jshintrc（windows用户应该在文件管理器里面创建.jshintrc.文件，然后它会自动改名为.jshintrc），在此文件里填写你的检查规则
- * gulp-clean和gulp-rimraf使用del代替，注意npm https://www.npmjs.com 上包的更新
- * 注意接口更新，详细参照https://github.com/sindresorhus/gulp-ruby-sass
  */
+
 
 // 引入 gulp及组件
 var gulp = require('gulp'),                       //基础库
     imagemin = require('gulp-imagemin'),          //图片压缩
-    jpegtran = require('imagemin-jpegtran'),      //压缩jpg
-    pngquant = require('imagemin-pngquant'),      //压缩jpg
     sass = require('gulp-ruby-sass'),             //sass编译
     minifycss = require('gulp-minify-css'),       //css压缩
     jshint = require('gulp-jshint'),              //js检查
     uglify  = require('gulp-uglify'),             //js压缩
     rename = require('gulp-rename'),              //重命名
     concat  = require('gulp-concat'),             //合并文件
+    autoprefixer = require('gulp-autoprefixer'),  //引入autoprefixer插件
     del = require('del'),                         //清空文件夹 gulp-clean和gulp-rimraf使用del代替 2015.8.6
-    tinylr = require('tiny-lr'),                  //livereload
+    // 处理livereload
+    tinylr = require('tiny-lr'),                  
     server = tinylr(),
     port = 35729,
     livereload = require('gulp-livereload'),      //livereload用于浏览器自动刷新
-    webserver = require('gulp-webserver'),        //用于在本地启动Http服务
-    autoprefixer = require('gulp-autoprefixer');  //引入autoprefixer插件
-
+    webserver = require('gulp-webserver');        //用于在本地启动Http服务
+   
 
 // HTML处理
 gulp.task('html', function() {
@@ -67,31 +39,6 @@ gulp.task('html', function() {
 });
 
 
-// 样式处理
-/*
-    With the syntax changes in gulp-ruby-sass starting from 1.0.0-alpha, you'll need to use gulp-ruby-sass() instead of gulp.src() to compile your Sass from a file or directory.
-    If you try to use the original syntax with newer or latest versions, you may encounter the following error:
-    TypeError: Arguments to path.join must be strings
-    For example, the original syntax in 0.7.x and earlier using gulp.src(), now deprecated:
-
-    var gulp = require('gulp');
-    var sass = require('gulp-ruby-sass');
-
-    // gulp-ruby-sass: 0.7.1
-    gulp.task('sass', function() {
-        return gulp.src('path/to/scss')
-            .pipe(sass({ style: 'expanded' }))
-            .pipe(gulp.dest('path/to/css'));
-    });
-    The new syntax introduced in 1.x using gulp-ruby-sass() as a gulp source adapter:
-
-    // gulp-ruby-sass: 1.x
-    gulp.task('sass', function() {
-        return sass('path/to/scss', { style: 'expanded' })//this is another difference
-            .pipe(gulp.dest('path/to/css'));
-    });
-    Notice the difference in the first line of the return statement.
-*/
 gulp.task('css', function () {
     //gulp-ruby-sass新的语法能识别路径下的所有文件，不用指定后缀名
     //旧版 var cssSrc = './src/scss/*.scss'
@@ -111,21 +58,13 @@ gulp.task('css', function () {
 });
 
 
-// 图片处理
+// 图片压缩
 gulp.task('images', function(){
-    var jpgSrc = './src/images/*.+(jpeg|jpg)',// 防止windows下gulp无法打开缩略图缓存Thunbs.db而报错
-        pngSrc = './src/images/*.png',// 防止windows下gulp无法打开缩略图缓存Thunbs.db而报错
+    var imgSrc = './src/images/*.+(jpeg|jpg|png)',// 防止windows下gulp无法打开缩略图缓存Thunbs.db而报错
         imgDst = './dist/images';
     
-    gulp.src(jpgSrc)
-        .pipe(jpegtran({progressive: true})())
-        .pipe(livereload(server))
-        .pipe(gulp.dest(imgDst));
-    gulp.src(pngSrc)
-        .pipe(imagemin({
-            progressive: true,
-            use: [pngquant({quality: '65-80'})]
-        }))
+    gulp.src(imgSrc)
+        .pipe(imagemin())
         .pipe(livereload(server))
         .pipe(gulp.dest(imgDst));
 });
@@ -155,7 +94,7 @@ gulp.task('clean', function() {
 
 // 编译工程：清空图片、样式、js并重建 运行语句 gulp build
 gulp.task('build', ['clean'], function(){
-    gulp.start('html','css','images','js');
+    gulp.start('html','css', 'js');
 });
 
 
@@ -198,4 +137,4 @@ gulp.task('server', function() {
 
 
 // 默认任务(编译工程)
-gulp.task('default', ['build']);
+gulp.task('default', ['build', 'server']);

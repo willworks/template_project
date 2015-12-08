@@ -4,7 +4,7 @@
 ## 解决问题  
  - 用scss和原生js编写代码  
  - gulp自动构建，压缩scss,图片和检查压缩js，编译出目标文件  
-
+ 
 ## 切换淘宝镜像加速  
  - npm http://npm.taobao.org/  
  - npm install -g nrm  
@@ -13,7 +13,7 @@
 ## 切换node版本nrm  
  - npm install -g nrm  
  - nrm ls //查看node所有版本  
- - nrm usr {verision}  
+ - nrm use {verision}  
 
 ## 使用淘宝RubyGems镜像安装sass  
  - 安装ruby，会自动安装gem  
@@ -21,11 +21,8 @@
  - gem sources -a https://ruby.taobao.org/  
  - gem install sass  
 
-## 组件安装  
- - npm install gulp-util gulp-imagemin gulp-ruby-sass gulp-minify-css gulp-jshint gulp-uglify gulp-rename gulp-concat del gulp-livereload tiny-lr --save-dev  
-
 ## 使用方法  
- - 进入根目录，npm install,安装文件依赖  
+ - 进入根目录，npm install，安装文件依赖  
  - gulp 默认任务编译工程  
  - ![image](https://github.com/willworks/template_project/raw/master/README/build.png)  
  - gulp server 开启服务器，默认打开入口网页，并且自动监控代码修改并且编译  
