@@ -17,7 +17,7 @@ var gulp = require('gulp'),                       //基础库
     uglify  = require('gulp-uglify'),             //js压缩
     rename = require('gulp-rename'),              //重命名
     concat  = require('gulp-concat'),             //合并文件
-    sourcemaps = require('gulp-sourcemaps'),      //文件独立处理
+    sourcemaps = require('gulp-sourcemaps'),      //生成sourcemaps文件，用于合并之后文件的错误调试
     del = require('del'),                         //清空文件夹 gulp-clean和gulp-rimraf使用del代替 2015.8.6
     // 以下都是处理livereload
     tinylr = require('tiny-lr'),                  
@@ -43,7 +43,8 @@ gulp.task('css',function(){
   var cssSrc = './src/css/*.css',
       cssDst = './dist/css';
   gulp.src(cssSrc)
-      //.pipe(sourcemaps.init())
+      .pipe(sourcemaps.init())
+      .pipe(concat('main.css'))
       .pipe(minifycss())
       .pipe(rename({ suffix: '.min' }))
       .pipe(gulp.dest(cssDst))
@@ -56,7 +57,10 @@ gulp.task('img', function(){
     var imgSrc = './src/img/*.+(jpeg|jpg|png)',// 防止windows下gulp无法打开缩略图缓存Thunbs.db而报错
         imgDst = './dist/img';
     gulp.src(imgSrc)
-        .pipe(imagemin())
+        .pipe(imagemin({
+            progressive: true, //jpg压缩
+            optimizationLevel: 3 //png压缩
+         }))
         .pipe(gulp.dest(imgDst))
         .pipe(livereload(server));
 });
@@ -68,6 +72,7 @@ gulp.task('js', function () {
         jsDst ='./dist/js';
     gulp.src(jsSrc)
         .pipe(sourcemaps.init())
+        .pipe(concat('main.js'))
         .pipe(uglify())
         .pipe(rename({ suffix: '.min' }))
         .pipe(gulp.dest(jsDst))
@@ -109,21 +114,13 @@ gulp.task('watch',function(){
             return console.log(err);
         }
         // 监听html
-        gulp.watch('./src/*.html', function(event){
-            gulp.run('html');
-        });
+        gulp.watch('./src/*.html', ['html']);
         // 监听css
-        gulp.watch('./src/scss/*.scss', function(){
-            gulp.run('css');
-        });
+        gulp.watch('./src/css/*.css', ['css']);
         // 监听img
-        gulp.watch('./src/img/**/*', function(){
-            gulp.run('img');
-        });
+        gulp.watch('./src/img/**/*', ['img']);
         // 监听js
-        gulp.watch('./src/js/*.js', function(){
-            gulp.run('js');
-        });
+        gulp.watch('./src/js/*.js', ['js']);
     });
 });
 
