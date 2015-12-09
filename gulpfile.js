@@ -58,8 +58,10 @@ gulp.task('img', function(){
         imgDst = './dist/img';
     gulp.src(imgSrc)
         .pipe(imagemin({
-            progressive: true, //jpg压缩
-            optimizationLevel: 3 //png压缩
+            optimizationLevel: 5, //类型：Number  默认：3 取值范围：0-7（优化等级）
+            progressive: true,    //类型：Boolean 默认：false 无损压缩jpg图片
+            interlaced: true,     //类型：Boolean 默认：false 隔行扫描gif进行渲染
+            multipass: true      //类型：Boolean 默认：false 多次优化svg直到完全优化
          }))
         .pipe(gulp.dest(imgDst))
         .pipe(livereload(server));
@@ -103,7 +105,7 @@ gulp.task('scss', function () {
 
 // 编译工程：清空图片、样式、js并重建 运行语句 gulp build
 gulp.task('build', ['clean'], function(){
-    gulp.start('html','css', 'js');
+    gulp.start('html', 'css', 'js', 'img');
 });
 
 
