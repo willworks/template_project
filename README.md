@@ -29,6 +29,8 @@
 
 
 ## 使用方法  
+windows下边需要用管理员权限执行npm install命令才能成功安装
+
   - npm install // 安装文件依赖  
   - gulp // 默认执行全部动作，清理dist文件夹，压缩文件，开启服务器监听
   - gulp js // 压缩js
