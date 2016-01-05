@@ -19,12 +19,7 @@ var gulp = require('gulp'),                       //基础库
     concat  = require('gulp-concat'),             //合并文件
     sourcemaps = require('gulp-sourcemaps'),      //生成sourcemaps文件，用于合并之后文件的错误调试
     del = require('del'),                         //清空文件夹 gulp-clean和gulp-rimraf使用del代替 2015.8.6
-    // 以下都是处理livereload
-    tinylr = require('tiny-lr'),                  
-    server = tinylr(),
-    port = 35729,
-    livereload = require('gulp-livereload'),      //livereload用于浏览器自动刷新
-    webserver = require('gulp-webserver');        //用于在本地启动Http服务
+    browserSync = require('browser-sync');        //browser-sync服务器刷新
 
 
 // HTML处理
@@ -33,8 +28,7 @@ gulp.task('html', function() {
         htmlDst = './dist/';
 
     gulp.src(htmlSrc)
-        .pipe(gulp.dest(htmlDst))
-        .pipe(livereload(server));
+        .pipe(gulp.dest(htmlDst));
 });
 
 
@@ -47,8 +41,7 @@ gulp.task('css',function(){
       .pipe(concat('main.css'))
       .pipe(minifycss())
       .pipe(rename({ suffix: '.min' }))
-      .pipe(gulp.dest(cssDst))
-      .pipe(livereload(server));
+      .pipe(gulp.dest(cssDst));
 });
 
 
@@ -63,8 +56,7 @@ gulp.task('img', function(){
             interlaced: true,     //类型：Boolean 默认：false 隔行扫描gif进行渲染
             multipass: true      //类型：Boolean 默认：false 多次优化svg直到完全优化
          }))
-        .pipe(gulp.dest(imgDst))
-        .pipe(livereload(server));
+        .pipe(gulp.dest(imgDst));
 });
 
 
@@ -77,8 +69,7 @@ gulp.task('js', function () {
         .pipe(concat('main.js'))
         .pipe(uglify())
         .pipe(rename({ suffix: '.min' }))
-        .pipe(gulp.dest(jsDst))
-        .pipe(livereload(server));
+        .pipe(gulp.dest(jsDst));
 });
 
 
@@ -98,8 +89,7 @@ gulp.task('scss', function () {
         .on('error', function (err) {
             console.error('Error!', err.message);
         })
-        .pipe(gulp.dest(cssDst))
-        .pipe(livereload(server));
+        .pipe(gulp.dest(cssDst));
 });
 
 
@@ -109,35 +99,24 @@ gulp.task('build', ['clean'], function(){
 });
 
 
-// 监听任务 运行语句 gulp watch
-gulp.task('watch',function(){
-    server.listen(port, function(err){
-        if (err) {
-            return console.log(err);
+// 服务器 开启时候默认监控文件更改并且自动编译
+gulp.task('server', ['build'], function() {
+    browserSync({
+        files: "**",
+        server: {
+            baseDir: "./"
         }
-        // 监听html
-        gulp.watch('./src/*.html', ['html']);
-        // 监听css
-        gulp.watch('./src/css/*.css', ['css']);
-        // 监听img
-        gulp.watch('./src/img/**/*', ['img']);
-        // 监听js
-        gulp.watch('./src/js/*.js', ['js']);
     });
-});
-
-
-// 服务器 开启时候默认监控文件更改并且自动编译 gulp server
-gulp.task('server', function() {
-  gulp.src('./src/')
-    .pipe(webserver({
-      livereload: true,
-      port: 8080, //端口号
-      open: true  //自动打开浏览器
-    }));
-  gulp.start('watch');
+    // 监听html
+    gulp.watch('./src/*.html', ['html']);
+    // 监听css
+    gulp.watch('./src/css/*.css', ['css']);
+    // 监听img
+    gulp.watch('./src/img/**/*', ['img']);
+    // 监听js
+    gulp.watch('./src/js/*.js', ['js']);
 });
 
 
 // 默认任务(编译工程)
-gulp.task('default', ['build', 'server']);
+gulp.task('default', ['server']);
