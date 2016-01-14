@@ -83,3 +83,5 @@ The new syntax introduced in 1.x using gulp-ruby-sass() as a gulp source adapter
 
 gulp-ruby-sass: 1.x  
 ![image](https://github.com/willworks/template_project/raw/master/README/new.png)  
+
+使用browser-sync更新项目替换liveReload
